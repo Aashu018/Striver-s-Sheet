@@ -1,45 +1,33 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] merged = mergeSortedArrays(nums1,nums2);
+        if(nums2.length<nums1.length) return(findMedianSortedArrays(nums2,nums1));
         
-        int l = merged.length;
-        // for(int i=0;i<l;i++){
-        //     System.out.println(merged[i]);
-        // }
-        if(l%2 == 1){
-            return (double)merged[l/2];
-        }
-        l = l/2;
-        double sum = (double)(merged[l]+merged[l-1])/2;
-        return sum;
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int lo = 0,hi = n1;
         
-    }
-        public int[] mergeSortedArrays(int[] arr1, int[] arr2) {
-        int len1 = arr1.length;
-        int len2 = arr2.length;
-        int[] result = new int[len1 + len2];
-        
-        int i = 0, j = 0, k = 0;
-        
-        // Compare elements from both arrays and merge them in the result array
-        while (i < len1 && j < len2) {
-            if (arr1[i] <= arr2[j]) {
-                result[k++] = arr1[i++];
-            } else {
-                result[k++] = arr2[j++];
+        while(lo<=hi){
+            int cut1 = (lo+hi)>>1;
+            int cut2 = (n1+n2+1)/2 - cut1;
+            
+            int l1 = cut1<=0? Integer.MIN_VALUE : nums1[cut1-1];
+            int l2 = cut2<=0? Integer.MIN_VALUE : nums2[cut2-1];
+            
+            int r1 = cut1>=n1? Integer.MAX_VALUE : nums1[cut1];
+            int r2 = cut2>=n2? Integer.MAX_VALUE : nums2[cut2];
+            
+            if(l1 <= r2 && l2 <= r1){
+                if((n1+n2)%2==0){
+                    return ((double)(Math.max(l1,l2) + Math.min(r1,r2))/2);
+                }else{
+                    return ((double)Math.max(l1,l2));
+                }
+            } else if(l1>r2){
+                hi = cut1-1;
+            }else {
+                lo = cut1+1;
             }
         }
-        
-        // Copy remaining elements from arr1, if any
-        while (i < len1) {
-            result[k++] = arr1[i++];
-        }
-        
-        // Copy remaining elements from arr2, if any
-        while (j < len2) {
-            result[k++] = arr2[j++];
-        }
-        
-        return result;
+        return 0.0;
     }
 }
