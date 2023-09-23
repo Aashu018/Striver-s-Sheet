@@ -1,12 +1,17 @@
 class Solution {
     public int maxProduct(int[] nums) {
         int maxi = Integer.MIN_VALUE;
+        int prefix = 1;
+        int suffix = 1;
         for(int i=0;i<nums.length;i++){
-            int prod = 1;
-            for(int j=i;j<nums.length;j++){
-                prod = prod * nums[j];
-                maxi = Math.max(prod,maxi);
-            }
+            if(prefix == 0) prefix = 1;
+            if(suffix == 0) suffix = 1;
+            
+            prefix = prefix * nums[i];
+            suffix = suffix * nums[nums.length-1-i];
+            
+            maxi = Math.max(maxi, Math.max(prefix,suffix));
+            
         }
         return maxi;
     }
