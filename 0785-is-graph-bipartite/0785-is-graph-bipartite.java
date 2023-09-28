@@ -5,7 +5,7 @@ class Solution {
         
         for(int i=0;i<graph.length;i++){
             if(color[i] == -1){
-                if(check(i,graph.length,graph,color)==false){
+                if(check(i,0,graph,color)==false){
                     return false;
                 }
             }
@@ -13,25 +13,18 @@ class Solution {
         return true;
     }
     
-    private boolean check(int node,int V, int[][] graph, int[] color){
-        Queue<Integer> q = new LinkedList <>();
-        q.add(node);
-        color[node] = 0;
+    private boolean check(int node,int col, int[][] graph, int[] color){
+        color[node] = col;
         
-        while(!q.isEmpty()){
-            int nod = q.peek();
-            q.remove();
-            
-            for(int i : graph[nod]){
-                if(color[i]==-1){
-                    color[i]= 1 - color[nod];
-                    q.add(i);
-                } else if(color[i]==color[nod]){
-                    return false;
-                    
-                }
+        for(int it : graph[node]){
+            if(color[it]==-1){
+                if(check(it,1-col,graph,color)==false)return false;
+                
             }
+            else if(color[it]==col)return false;
         }
+        
+            
         return true;
     }
 }
