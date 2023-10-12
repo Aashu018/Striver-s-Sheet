@@ -1,33 +1,23 @@
-import java.util.*;
-
-public class Solution {
+class Solution {
     public String frequencySort(String s) {
-        // Step 1: Create a frequency map
-        Map<Character, Integer> frequencyMap = new HashMap<>();
-        for (char c : s.toCharArray()) {
-            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+         HashMap<Character, Integer> map=new HashMap<>();
+        for(int i=0; i<s.length(); i++){
+            if(map.containsKey(s.charAt(i))){
+                map.put(s.charAt(i),map.get(s.charAt(i))+1);
+            }else{
+                map.put(s.charAt(i),1);
+            }            
         }
-
-        // Step 2: Create a max heap with a custom comparator
-        PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>(
-            (entry1, entry2) -> entry2.getValue() - entry1.getValue()
-        );
-
-        // Step 3: Add character-frequency pairs to the max heap
-        maxHeap.addAll(frequencyMap.entrySet());
-
-        // Step 4: Build the sorted string
-        StringBuilder sortedString = new StringBuilder();
-        while (!maxHeap.isEmpty()) {
-            Map.Entry<Character, Integer> entry = maxHeap.poll();
-            char c = entry.getKey();
-            int frequency = entry.getValue();
-            for (int i = 0; i < frequency; i++) {
-                sortedString.append(c);
-            }
+        
+        String ans="";
+        PriorityQueue<Character> pq=new PriorityQueue<>((a,b)->(map.get(b)-map.get(a)));
+        pq.addAll(map.keySet());
+        while(!pq.isEmpty()){
+           char ch=pq.poll();
+           for(int i=0; i<map.get(ch); i++){
+               ans+=ch+"";
+           }
         }
-
-        return sortedString.toString();
+        return ans;
     }
-
 }
