@@ -1,18 +1,22 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-       // List<Integer> arr = new  ArrayList<>();
-        int[] ans = new int[2];
-       HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
-            ans[0] = i;
-            int need = target - nums[i];
-            if(hm.containsKey(need)){
-               int j=  hm.get(need);
-                ans[1] = j;
-                return ans;
+      // Create a HashMap to store numbers and their indices
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Iterate through the array
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i]; // Calculate the complement needed to reach the target
+            
+            // Check if the complement exists in the HashMap
+            if (map.containsKey(complement)) {
+                // If found, return the indices of both numbers that sum up to the target
+                return new int[] { map.get(complement), i };
             }
-            hm.put(nums[i],i);
+            
+            // Store the current number and its index in the HashMap
+            map.put(nums[i], i);
         }
-        return ans;
+        
+     return new int[0];
     }
-}
+} 
