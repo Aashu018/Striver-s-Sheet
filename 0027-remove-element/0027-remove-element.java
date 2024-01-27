@@ -1,15 +1,12 @@
 class Solution {
     public int removeElement(int[] nums, int val) {
-        int count = 0;
+       int idx=0;
         for(int i=0;i<nums.length;i++){
-             if(nums[i]==val){
-                 nums[i] = Integer.MAX_VALUE;
-             }
-           else{
-               count++;
-           }
+            if(nums[i]!=val){
+                nums[idx] = nums[i];
+                idx++;
+            }
         }
-         Arrays.sort(nums);
-        return count;
+         return idx;
     }
 }
