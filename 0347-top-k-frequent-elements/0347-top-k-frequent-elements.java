@@ -8,13 +8,17 @@ class Solution {
         
         int[] output  = new int[k];
         
-       PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b)->            b.getValue()-a.getValue());
+       PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> hm.get(a)-hm.get(b));
         
-        for(Map.Entry entry: hm.entrySet()){
-            pq.add(entry);
+        for(int n: hm.keySet()){
+            pq.add(n);
+            
+            if(pq.size()>k){
+                pq.poll();
+            }
         }
         for(int i=0;i<k;i++){
-            output[i] = pq.poll().getKey();
+            output[i] = pq.poll();
         }
         
         return output;
