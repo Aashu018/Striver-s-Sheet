@@ -8,22 +8,19 @@ class Solution {
             
             hm.put(ch,hm.getOrDefault(ch,0)+1);
         }
-        System.out.println(hm);
+      //  System.out.println(hm);
         
         for(int i=0;i<s.length();i++){
             char ch = t.charAt(i);
             
-            if(hm.containsKey(ch)){
-                int freq = hm.get(ch);
-                freq--;
-                System.out.println(freq);
-                hm.put(ch,freq);
+            if(!hm.containsKey(ch) || hm.get(ch) == 0)
+               return false;
            
-        }
+            else 
+               hm.put(ch,hm.get(ch)-1);
+        
     }
-        for(int val: hm.values()){
-            if(val !=0)return false;
-        }
+       
             return true;
         
     }
